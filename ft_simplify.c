@@ -1,5 +1,5 @@
 #include "libft.h"
-#include <stdio.h>
+// #include <stdio.h>
 
 static int	ft_check_simplicity(int *stack, int len)
 {
@@ -99,7 +99,7 @@ static void	ft_match_equals(int *simplified, int *stack, int len, int matchable)
 	}
 }
 
-int			ft_greatest_found(int *stack, int *simplified, int len)
+static int		ft_greatest_found(int *stack, int *simplified, int len)
 {
 	int 	biggest_num_index;
 	int		only_zeroes;
@@ -119,7 +119,7 @@ int			ft_greatest_found(int *stack, int *simplified, int len)
 	return (simplified[biggest_num_index]);
 }
 
-int			*ft_simplify(int *stack, int len)
+unsigned int	*ft_simplify(int *stack, int len)
 {
 	unsigned int	*simplified;
 	int				simple_index;
@@ -152,29 +152,28 @@ int			*ft_simplify(int *stack, int len)
 		}
 		i++;
 	}
+	free(stack);
 	return (simplified);
 }
 
-int main(void)
-{
-	int		*test;
-	int		len = 10;
-	int		*og;
+// int main(void)
+// {
+// 	int		*test;
+// 	int		len = 10;
 
-	test = (int*)malloc(sizeof(int) * len);
-	og = test;
-	test[0] = -9;
-	test[1] = -5;
-	test[2] = -1;
-	test[3] = 0;
-	test[4] = 1;
-	test[6] = 10;
-	test[7] = 15;
-	test[8] = 24;
-	test[9] = 100;
-	test = ft_simplify(test, len);
-	ft_check_simplicity(test, len);
-	ft_putstr("original:\t");
-	ft_putnbr_arr(&og, 1, len);
-	return (0);
-}
+// 	test = (int*)malloc(sizeof(int) * len);
+// 	test[0] = -9;
+// 	test[1] = -5;
+// 	test[2] = -1;
+// 	test[3] = 0;
+// 	test[4] = 1;
+// 	test[6] = 10;
+// 	test[7] = 15;
+// 	test[8] = 24;
+// 	test[9] = 100;
+// 	ft_putstr("original:\t");
+// 	ft_putnbr_arr(&test, 1, len);
+// 	test = ft_simplify(test, len);
+// 	ft_check_simplicity(test, len);
+// 	return (0);
+// }

@@ -12,9 +12,9 @@
 
 #include "libft.h"	//remove
 
-void	ft_swap_ps(int *stack, int len)
+void	ft_swap_ps(unsigned *stack, unsigned len)
 {
-	int	tmp;
+	unsigned	tmp;
 
 	if (len < 2)
 	{
@@ -28,16 +28,16 @@ void	ft_swap_ps(int *stack, int len)
 	stack[1] = tmp;
 }
 
-void	ft_ss(int *stack1, int *stack2, int len1, int len2)
+void	ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
 	ft_swap_ps(stack1, len1);
 	ft_swap_ps(stack2, len2);
 }
 
-void	ft_push(int *stack, int *dest, int len1, int len2)
+void	ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2)
 {
-	int		i;
-	int		tmp;
+	unsigned		i;
+	unsigned		tmp;
 
 	i = 0;
 	if (len1)

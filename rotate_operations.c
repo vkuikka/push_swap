@@ -12,10 +12,10 @@
 
 #include "push_swap.h"
 
-void	ft_rotate(int *stack, int len)
+void	ft_rotate(unsigned *stack, unsigned len)
 {
-	int		first;
-	int		i;
+	unsigned		first;
+	unsigned		i;
 
 	if (len < 2)
 	{
@@ -33,16 +33,16 @@ void	ft_rotate(int *stack, int len)
 	stack[i] = first;
 }
 
-void	ft_rr(int *stack1, int *stack2, int len1, int len2)
+void	ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
 	ft_rotate(stack1, len1);
 	ft_rotate(stack2, len2);
 }
 
-void	ft_rrotate(int *stack, int len)
+void	ft_rrotate(unsigned *stack, unsigned len)
 {
-	int		last;
-	int		i;
+	unsigned		last;
+	unsigned		i;
 
 	if (len < 2)
 	{
@@ -59,7 +59,7 @@ void	ft_rrotate(int *stack, int len)
 	stack[0] = last;
 }
 
-void	ft_rrr(int *stack1, int *stack2, int len1, int len2)
+void	ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
 	ft_rrotate(stack1, len1);
 	ft_rrotate(stack2, len2);

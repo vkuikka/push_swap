@@ -11,7 +11,8 @@
 # **************************************************************************** #
 
 NAME = push_swap
-EXTRAS = swap_operations.c rotate_operations.c
+OPERATIONS = swap_operations.c rotate_operations.c
+EXTRAS = ft_simplify.c
 LIB = libft/libft.a
 INCLUDE = libft/includes
 .PHONY: clean fclean re all
@@ -20,8 +21,8 @@ all: $(NAME)
 
 $(NAME):
 	#make -C libft
-	gcc -o $(NAME) push_swap.c $(EXTRAS) $(LIB) -I $(INCLUDE)
-	gcc -o checker checker.c $(EXTRAS) $(LIB) -I $(INCLUDE)
+	gcc -o $(NAME) push_swap.c $(OPERATIONS) $(LIB) $(EXTRAS) -I $(INCLUDE)
+	gcc -o checker checker.c $(OPERATIONS) $(LIB) -I $(INCLUDE)
 	#gcc -o $(NAME) -Wall -Wextra -Werror $(FILES) $(LIB) -I $(INCLUDE)
 
 clean:

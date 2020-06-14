@@ -1,20 +1,21 @@
 #include "push_swap.h"
+#include "get_next_line.h"
 
 static int ft_swap_operations(int **stacks, int *lengths, char *instruction)
 {
-	if (!ft_strcmp(instruction, "sa\n"))
+	if (!ft_strcmp(instruction, "sa"))
 		ft_swap_ps(stacks[0], lengths[0]);
-	else if (!ft_strcmp(instruction, "sb\n"))
+	else if (!ft_strcmp(instruction, "sb"))
 		ft_swap_ps(stacks[1], lengths[1]);
-	else if (!ft_strcmp(instruction, "ss\n"))
+	else if (!ft_strcmp(instruction, "ss"))
 		ft_ss(stacks[0], stacks[1], lengths[0], lengths[1]);
-	else if (!ft_strcmp(instruction, "pb\n"))
+	else if (!ft_strcmp(instruction, "pb"))
 	{
 		ft_push(stacks[0], stacks[1], lengths[0], lengths[1]);
 		lengths[0]--;
 		lengths[1]++;
 	}
-	else if (!ft_strcmp(instruction, "pa\n"))
+	else if (!ft_strcmp(instruction, "pa"))
 	{
 		ft_push(stacks[1], stacks[0], lengths[1], lengths[0]);
 		lengths[1]--;
@@ -27,11 +28,11 @@ static int ft_swap_operations(int **stacks, int *lengths, char *instruction)
 
 static int ft_rotate_operations(int **stacks, int *lengths, char *instruction)
 {
-	if (!ft_strcmp(instruction, "ra\n"))
+	if (!ft_strcmp(instruction, "ra"))
 		ft_rotate(stacks[0], lengths[0]);
-	else if (!ft_strcmp(instruction, "rb\n"))
+	else if (!ft_strcmp(instruction, "rb"))
 		ft_rotate(stacks[1], lengths[1]);
-	else if (!ft_strcmp(instruction, "rr\n"))
+	else if (!ft_strcmp(instruction, "rr"))
 		ft_rr(stacks[0], stacks[1], lengths[0], lengths[1]);
 	else if (!ft_strcmp(instruction, "rra"))
 		ft_rrotate(stacks[0], lengths[0]);
@@ -61,7 +62,7 @@ static int	ft_check_order(int **stacks, int *lengths)
 
 static int	ft_evaluate(int **stacks, int *lengths)
 {
-	char	instruction[4];
+	char	*instruction;
 	char	*last_instr;
 	int		solved;
 	int		i;
@@ -73,9 +74,8 @@ static int	ft_evaluate(int **stacks, int *lengths)
 	while (!solved)
 	{
 		i = -1;
-		if (!read(0, instruction, 4))
+		if (!get_next_line(0, &instruction))
 			return (ft_check_order(stacks, lengths));	//stop if ctrl+D is pressed (end of input)
-		instruction[3] = '\0';
 		if (!ft_rotate_operations(stacks, lengths, instruction) &&
 			!ft_swap_operations(stacks, lengths, instruction))
 		{

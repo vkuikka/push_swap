@@ -22,8 +22,8 @@ all: $(NAME)
 $(NAME):
 	#make -C libft
 	gcc -o $(NAME) push_swap.c $(OPERATIONS) $(LIB) $(EXTRAS) -I $(INCLUDE)
-	gcc -o checker checker.c $(OPERATIONS) $(LIB) -I $(INCLUDE)
-	#gcc -o $(NAME) -Wall -Wextra -Werror $(FILES) $(LIB) -I $(INCLUDE)
+	#gcc -o checker checker.c $(OPERATIONS) $(LIB) -I $(INCLUDE)
+	#gcc -o $(NAME) -Wall -Wextra -Werror $(OPERATIONS) $(LIB) $(EXTRAS) -I $(INCLUDE)
 
 clean:
 	#make clean -C libft

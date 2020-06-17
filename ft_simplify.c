@@ -69,7 +69,7 @@ static int	ft_smallest_greater_than(int *stack, int len, int biggest_num)
 	return (smallest);
 }
 
-static int	ft_find_smallest(int *stack, int len)
+int			ft_find_smallest(int *stack, int len)
 {
 	int		smallest;
 	int		i;

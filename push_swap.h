@@ -21,6 +21,8 @@ void	ft_rotate(unsigned *stack, unsigned len);
 void	ft_rrotate(unsigned *stack, unsigned len);
 void	ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 void	ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+
+int		ft_find_smallest(int *stack, int len);
 int		*ft_simplify(int *stack, int len);
 
 #endif

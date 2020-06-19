@@ -37,6 +37,23 @@ void	ft_putinfo(unsigned len1, unsigned len2, unsigned *ar1, unsigned *ar2, unsi
 	ft_putstr("\n");
 }
 
+static int		ft_find_biggest(int *stack, int len)
+{
+	int		biggest;
+	int		i;
+
+	i = 1;
+	biggest = 0;
+	while (i < len)
+	{
+		// printf("biggest: %d, index: %d\n", biggest, i);
+		if (stack[i] > stack[biggest])
+			biggest = i;
+		i++;
+	}
+	return (biggest);
+}
+
 static int		ft_check_order(unsigned	*stack, unsigned len)
 {
 	int		i;
@@ -49,6 +66,65 @@ static int		ft_check_order(unsigned	*stack, unsigned len)
 		i++;
 	}
 	return(1);
+}
+
+static void		ft_push_order(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2, unsigned stack_index, unsigned reverse)
+{
+	int		i;
+
+	i = 0;
+	ft_putstr("\n");
+	ft_putnbr_arr((int**)&st2, 1, len2);
+	ft_putstr("push order: ");
+	while (len2 > 1 && st2[0] < st1[0] && i < len2)
+	{
+		ft_rotate(st2, len2);
+		ft_putnbr(i);
+		i++;
+	}
+	ft_putstr("\n");
+	ft_putnbr_arr((int**)&st2, 1, len2);
+	i = 0;
+	ft_putstr("\nreverse: ");
+	while (len2 > 1 && st2[0] > st1[0] && st2[len2 -1] > st1[0] && i < len2)
+	{
+		ft_rrotate(st2, len2);
+		ft_putnbr(i);
+		i++;
+	}
+	ft_putstr("\n");
+	ft_putnbr_arr((int**)&st2, 1, len2);
+	ft_push(st1, st2, len1, len2);
+	len1--;
+	len2++;
+	ft_putnbr_arr((int**)&st2, 1, len2);
+	i = 0;
+	while (st2[0] < stack_index && i < len2 && len2 > 1)
+	{
+		ft_rotate(st2, len2);
+		ft_putnbr(i);
+		i++;
+	}
+	i = 0;
+	while (st2[0] > stack_index && i < len2 && len2 > 1)
+	{
+		ft_rrotate(st2, len2);
+		ft_putnbr(i);
+		i++;
+	}
+
+	i = 0;
+	if (reverse)
+	{
+		i = ft_find_biggest(st2, len2);
+		while (i)
+		{
+			ft_rotate(st2, len2);
+			i--;
+		}
+	}
+
+	ft_putstr("\n");
 }
 
 static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
@@ -110,13 +186,14 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 		else if (st1[0] > i)
 		{
 			printf("push away: %d index: %d\n", st1[0], i);
-			ft_push(st1, st2, len1, len2);
-			if (len2 > 1)
-				ft_swap_ps(st2, len2);
+			ft_push_order(st1, st2, len1, len2, i, 0);
+			// if (len2 > 1)
+			// 	ft_swap_ps(st2, len2);
 			len1--;
 			len2++;
 		}
-
+		if (len2 > 1 && st2[0] < i)
+			ft_rotate(st2, len2);
 
 		if (len2 && st2[0] == i)
 		{
@@ -126,15 +203,10 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 			len2--;
 			len1++;
 		}
-		else
+		else if (st1[0] <= i)
 		{
-			if (st1[0] <= i)
-			{
-				ft_rotate(st1, len1);
-				// i++;
-			}
-			if (len2 > 1 && st2[0] < i)
-				ft_rotate(st2, len2);
+			ft_rotate(st1, len1);
+			// i++;
 		}
 		i++;
 		// else if (i < len1)
@@ -142,20 +214,17 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 		// else if (len2 > 1 && st2[0] < i)
 		// 	ft_rotate(st2, len2);
 		ft_putinfo(len1, len2, st1, st2, i);
-		if (i == len)
-			break;
 	}
 	ft_rotate(st1, len1);
 
 
 	ft_putinfo(len1, len2, st1, st2, -1);
 	ft_putnbr_arr((int**)&st1, 1, len1);
-	return (1);
 
 	ft_putstr("!!!!!!!!!!!!!!!!!!!!!SWITCH!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 
 	int asd = 0;
-	while (i > -1)
+	while (i >= 0)
 	{
 		asd = 0;
 		if (len2 && st2[0] == i)
@@ -172,9 +241,7 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 		if (st1[0] < i)
 		{
 			printf("push away: %d index: %d\n", st1[0], i);
-			ft_push(st1, st2, len1, len2);
-			if (len2 > 1)
-				ft_swap_ps(st2, len2);
+			ft_push_order(st1, st2, len1, len2, i, 1);
 			len1--;
 			len2++;
 			ft_rrotate(st1, len1);
@@ -187,8 +254,6 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 				ft_rrotate(st1, len1);
 				// i--;
 			}
-			if (len2 > 1 && st2[0] < i)
-				ft_rrotate(st2, len2);
 			i--;
 		}
 		// else if (i < len1)
@@ -197,6 +262,8 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 		// 	ft_rotate(st2, len2);
 		ft_putinfo(len1, len2, st1, st2, i);
 	}
+	if (!ft_check_order(st1, len1))
+		ft_rrotate(st1, len1);
 	
 	ft_putinfo(len1, len2, st1, st2, -1);
 	ft_putnbr_arr((int**)&st1, 1, len1);

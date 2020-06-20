@@ -45,7 +45,7 @@ static int ft_rotate_operations(int **stacks, int *lengths, char *instruction)
 	return (1);
 }
 
-static int	ft_check_order(int **stacks, int *lengths)
+static int	ft_EOI_check(int **stacks, int *lengths)
 {
 	int		i;
 
@@ -75,7 +75,7 @@ static int	ft_evaluate(int **stacks, int *lengths)
 	{
 		i = -1;
 		if (!get_next_line(0, &instruction))
-			return (ft_check_order(stacks, lengths));	//stop if ctrl+D is pressed (end of input)
+			return (ft_EOI_check(stacks, lengths));	//stop if ctrl+D is pressed (end of input)
 		if (!ft_rotate_operations(stacks, lengths, instruction) &&
 			!ft_swap_operations(stacks, lengths, instruction))
 		{

@@ -14,15 +14,18 @@
 # define PUSH_SWAP_H
 # include "libft.h"
 
-void	ft_swap_ps(unsigned *stack, unsigned len);
-void	ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
-void	ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2);
-void	ft_rotate(unsigned *stack, unsigned len);
-void	ft_rrotate(unsigned *stack, unsigned len);
-void	ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
-void	ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+void		ft_swap_ps(unsigned *stack, unsigned len);
+void		ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+void		ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2);
+void		ft_rotate(unsigned *stack, unsigned len);
+void		ft_rrotate(unsigned *stack, unsigned len);
+void		ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+void		ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 
-int		ft_find_smallest(int *stack, int len);
-int		*ft_simplify(int *stack, int len);
+unsigned	*ft_simplify(int *stack, int len);
+int			ft_find_smallest(unsigned *stack, unsigned len);
+int			ft_find_biggest(unsigned *stack, unsigned len);
+int			ft_check_order(unsigned	*stack, unsigned len);
+int			ft_find_error(unsigned *stack, unsigned len);
 
 #endif

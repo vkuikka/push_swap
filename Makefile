@@ -12,7 +12,7 @@
 
 NAME = push_swap
 OPERATIONS = swap_operations.c rotate_operations.c
-EXTRAS = ft_simplify.c
+EXTRAS = ft_simplify.c stack_iteration.c
 LIB = libft/libft.a
 INCLUDE = libft/includes
 .PHONY: clean fclean re all

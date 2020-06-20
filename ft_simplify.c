@@ -1,4 +1,5 @@
 #include "libft.h"
+#include "push_swap.h"
 // #include <stdio.h>
 
 static int	ft_check_simplicity(int *stack, int len)
@@ -66,23 +67,6 @@ static int	ft_smallest_greater_than(int *stack, int len, int biggest_num)
 		i++;
 	}
 	// printf("smallest greater than %d is %d index: %d\n", biggest_num, stack[smallest], smallest);
-	return (smallest);
-}
-
-int			ft_find_smallest(int *stack, int len)
-{
-	int		smallest;
-	int		i;
-
-	i = 1;
-	smallest = 0;
-	while (i < len)
-	{
-		// printf("smallest: %d, index: %d\n", smallest, i);
-		if (stack[i] < stack[smallest])
-			smallest = i;
-		i++;
-	}
 	return (smallest);
 }
 
@@ -177,3 +161,4 @@ unsigned int	*ft_simplify(int *stack, int len)
 // 	ft_check_simplicity(test, len);
 // 	return (0);
 // }
+

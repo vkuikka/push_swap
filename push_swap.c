@@ -41,7 +41,7 @@ static void		ft_push_order_rev(unsigned *st1, unsigned *st2, unsigned len1, unsi
 {
 	int		i;
 
-	ft_putstr("push order rev\n");
+	//0	  3 1 2
 	if (len2 > 2)
 		while (!(st1[0] < st2[0] && st1[0] > st2[len2 - 1]) &&										//2   3 0 1
 			((st1[0] < st2[ft_find_smallest(st2, len2)] && ft_find_smallest(st2, len2) != 0) ||		//0   1 2 3
@@ -86,9 +86,9 @@ static void		ft_push_order(unsigned *st1, unsigned *st2, unsigned len1, unsigned
 			ft_putinfo(len1, len2, st1, st2, -1);
 		}
 	}
-	if (len2 == 2 && (st2[0] > st2[1] && st1[0] > st2[1] && st1[0] > st2[0]) ||	// 2   1 0
+	if (len2 == 2 && ((st2[0] > st2[1] && st1[0] > st2[1] && st1[0] > st2[0]) ||	// 2   1 0
 					(st2[0] < st2[1] && st1[0] > st2[0] && st1[0] < st2[1]) ||	// 1   0 2
-					(st2[0] > st2[1] && st1[0] < st2[0] && st1[0] < st2[1]))	// 0   2 1
+					(st2[0] > st2[1] && st1[0] < st2[0] && st1[0] < st2[1])))	// 0   2 1
 		ft_swap_ps(st2, len2);
 	ft_push(st1, st2, len1, len2);
 	len1--;
@@ -125,14 +125,14 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 
 	int i = 0;
 
-	while (i <= len)
+	while (i < len)
 	{
-		if (st1[0] == i + 1 && st1[1] != st1[0] + 1 && !(len2 && st2[0] == i))
+		if ((st1[0] == i + 1 && st1[1] != st1[0] + 1 && !(len2 && st2[0] == i)) || st1[0] == st1[1] + 1)
 		{
 			ft_swap_ps(st1, len1);
 			ft_putstr("swapping\n");
 		}
-		else if (st1[0] > i + 1)
+		if (st1[0] > i + 1)
 		{
 			printf("push away: %d index: %d\n", st1[0], i);
 			ft_push_order(st1, st2, len1, len2);
@@ -141,19 +141,27 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 		}
 		if (len2 > 1 && st2[0] < i)
 			ft_rotate(st2, len2);
-
 		if (len2 && st2[0] == i)
 		{
+			if (st1[0] == st2[0] - 1)
+				ft_rotate(st1, len1);
 			printf("push back: %d index: %d\n", st2[0], i);
-			ft_rotate(st1, len1);
+			// ft_rotate(st2, len2); without the next rotate??
 			ft_push(st2, st1, len2, len1);
 			len2--;
 			len1++;
+			ft_rotate(st1, len1);
 		}
 		else if (st1[0] <= i)
 		{
 			ft_rotate(st1, len1);
 			// i++;
+		}
+		if (ft_check_order(st1, len1) && len1 == len)
+		{
+			ft_putinfo(len1, len2, st1, st2, i);
+			ft_putnbr_arr((int**)&st1, 1, len1);
+			return (1);
 		}
 		i++;
 		ft_putinfo(len1, len2, st1, st2, i);
@@ -165,20 +173,29 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 
 	// return (0);
 	ft_putstr("!!!!!!!!!!!!!!!!!!!!!SWITCH!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	while (st1[len1 - 1] == st1[0] - 1)
+		ft_rrotate(st1, len1);
 
+	ft_putnbr(len);
+	ft_putstr("\n");
 	i = len - 1;
+	ft_rrotate(st1, len1);
+	// i = len - 1; maybe divisible with 2
 	while (i >= 0 && !(ft_check_order(st1, len1) && !len2))
 	{
+		ft_putinfo(len1, len2, st1, st2, i);
 		if (st1[0] != st1[1] - 1 && st1[0] != i)
 		{
+			ft_putstr("push away\n");
 			ft_push_order_rev(st1, st2, len1, len2);
 			len1--;
 			len2++;
 		}
-		else
+		else if (st1[0] != st1[1] - 1)
 			i--;
 		while (st2[0] == st1[0] - 1)
 		{
+			ft_putstr("push back\n");
 			ft_push(st2, st1, len2, len1);
 			len2--;
 			len1++;
@@ -187,7 +204,6 @@ go right to left if number is too small put it in stack2 if its too big ignore i
 			ft_rrotate(st1, len1);
 		else
 			break;
-		ft_putinfo(len1, len2, st1, st2, i);
 	}
 	if (!ft_check_order(st1, len1))
 		ft_rrotate(st1, len1);
@@ -211,7 +227,7 @@ int		main(int argc, char **argv)
 	}
 	argc--;
 	if (!(buffer = (int *)malloc(sizeof(int) * argc)) ||
-		!(stack2 = (int *)malloc(sizeof(int) * argc)))
+		!(stack2 = (unsigned *)malloc(sizeof(unsigned) * argc)))
 		return (0);
 	ft_bzero(stack2, argc);
 	i = -1;

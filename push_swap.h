@@ -22,8 +22,9 @@ void		ft_rrotate(unsigned *stack, unsigned len);
 void		ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 void		ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 
-unsigned	*ft_simplify(int *stack, int len);
+unsigned	*ft_simplify(int *stack, unsigned len);
 int			ft_find_smallest(unsigned *stack, unsigned len);
+int			ft_find_smallest_signed(int *stack, unsigned len);
 int			ft_find_biggest(unsigned *stack, unsigned len);
 int			ft_check_order(unsigned	*stack, unsigned len);
 int			ft_find_error(unsigned *stack, unsigned len);

@@ -34,8 +34,24 @@ int		ft_find_biggest(unsigned *stack, unsigned len)
 
 int			ft_find_smallest(unsigned *stack, unsigned len)
 {
-	int		smallest;
-	int		i;
+	unsigned	smallest;
+	unsigned	i;
+
+	i = 1;
+	smallest = 0;
+	while (i < len)
+	{
+		if (stack[i] < stack[smallest])
+			smallest = i;
+		i++;
+	}
+	return (smallest);
+}
+
+int			ft_find_smallest_signed(int *stack, unsigned len)
+{
+	unsigned	smallest;
+	unsigned	i;
 
 	i = 1;
 	smallest = 0;

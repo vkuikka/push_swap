@@ -70,9 +70,9 @@ static int	ft_smallest_greater_than(int *stack, int len, int biggest_num)
 	return (smallest);
 }
 
-static void	ft_match_equals(int *simplified, int *stack, int len, int matchable)
+static void	ft_match_equals(unsigned *simplified, int *stack, unsigned len, unsigned matchable)
 {
-	int		i;
+	unsigned		i;
 
 	i = 0;
 	while (i < len)
@@ -83,11 +83,11 @@ static void	ft_match_equals(int *simplified, int *stack, int len, int matchable)
 	}
 }
 
-static int		ft_greatest_found(int *stack, int *simplified, int len)
+static int		ft_greatest_found(int *stack, unsigned *simplified, unsigned len)
 {
-	int 	biggest_num_index;
-	int		only_zeroes;
-	int		i;
+	unsigned 	biggest_num_index;
+	unsigned	only_zeroes;
+	unsigned	i;
 
 	i = 1;
 	only_zeroes = 1;
@@ -103,7 +103,7 @@ static int		ft_greatest_found(int *stack, int *simplified, int len)
 	return (simplified[biggest_num_index]);
 }
 
-unsigned int	*ft_simplify(int *stack, int len)
+unsigned int	*ft_simplify(int *stack, unsigned len)
 {
 	unsigned int	*simplified;
 	int				simple_index;
@@ -111,18 +111,18 @@ unsigned int	*ft_simplify(int *stack, int len)
 	int				found_index;
 	int				i;
 
-	if (!(simplified = (int *)malloc(sizeof(int) * len)))
+	if (!(simplified = (unsigned *)malloc(sizeof(unsigned) * len)))
 		return (NULL);
-	ft_bzero(simplified, len);
+	i = -1;
+	while(++i < len)
+		simplified[i] = 0;
 	current_num = 1;
-	found_index = ft_find_smallest(stack, len);
+	found_index = ft_find_smallest_signed(stack, len);
 
-	int j = 0;
 	i = 0;
 	// ft_putnbr_arr((int **)&stack, 1, len);
 	while (!ft_greatest_found(stack, simplified, len))
 	{
-		j++;
 		// ft_putnbr_arr((int **)&simplified, 1, len);
 		if (i == len)
 			i = 0;
@@ -147,12 +147,12 @@ unsigned int	*ft_simplify(int *stack, int len)
 
 // 	test = (int*)malloc(sizeof(int) * len);
 // 	test[0] = -9;
-// 	test[1] = -5;
+// 	test[1] = -2147483648;
 // 	test[2] = -1;
 // 	test[3] = 0;
 // 	test[4] = 1;
 // 	test[6] = 10;
-// 	test[7] = 15;
+// 	test[7] = 2147483647;
 // 	test[8] = 24;
 // 	test[9] = 100;
 // 	ft_putstr("original:\t");

@@ -28,5 +28,7 @@ int			ft_find_smallest_signed(int *stack, unsigned len);
 int			ft_find_biggest(unsigned *stack, unsigned len);
 int			ft_check_order(unsigned	*stack, unsigned len);
 int			ft_find_error(unsigned *stack, unsigned len);
+void		ft_push_order_rev(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2);
+void		ft_push_order(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2);
 
 #endif

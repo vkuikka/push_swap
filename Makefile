@@ -6,12 +6,12 @@
 #    By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/08 13:46:11 by vkuikka           #+#    #+#              #
-#    Updated: 2020/07/06 12:43:59 by vkuikka          ###   ########.fr        #
+#    Updated: 2020/07/29 15:10:27 by vkuikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-OPERATIONS = swap_operations.c rotate_operations.c
+OPERATIONS = push_order.c swap_operations.c rotate_operations.c
 EXTRAS = ft_simplify.c stack_iteration.c
 LIB = libft/libft.a
 INCLUDE = libft/includes

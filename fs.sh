@@ -1,5 +1,5 @@
 while :
 do
-	./push_swap `shuf -i 0-1000 -n 60`
+	./push_swap `seq 0 499 | sort -R`
 	sleep 0.4
 done

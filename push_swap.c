@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:08:48 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/05 14:41:18 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/05 20:24:03 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,35 @@ void	ft_putstack(unsigned *stack, unsigned len, int rot_index, int direction)
 	printf("\n");
 }
 
+void	ft_rot_start(unsigned *stack, int len)
+{
+	int		dist;
+
+	dist = 0;
+	while (dist <= len / 2)
+	{
+		if (stack[dist] == 0)
+			break;
+		if (stack[len - dist] == 0 && (dist *= -1))
+			break;
+		dist++;
+	}
+	while (ft_abs(dist))
+	{
+		if (dist > 0)
+		{
+			ft_rotate(stack, len);
+			dist--;
+		}
+		else
+		{
+			ft_rrotate(stack, len);
+			dist++;
+		}
+		moves++;
+	}
+}
+
 void	ft_optimize_start(unsigned *stack, int len)
 {
 	int tmp;
@@ -49,7 +78,6 @@ void	ft_optimize_start(unsigned *stack, int len)
 
 	tmp = 0;
 	i = 0;
-	ft_putstack(stack, len, 0, 1);
 	while (i < START_FIND_DIST)
 	{
 		if (stack[i + 1] < stack[tmp])
@@ -72,87 +100,84 @@ void	ft_optimize_start(unsigned *stack, int len)
 		}
 		moves++;
 	}
-	ft_putstack(stack, len, 0, 1);
-	printf("\n");
 }
 
-int			ft_push_back_dist(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2)
-{
-	int	dist;
-	int i;
+// int			*ft_orders(unsigned index, unsigned *bools, unsigned *stack, unsigned len)
+// {
+// 	static int			best = 0;
+// 	static float		score = 0;
+// 	static int			*best_arr = NULL;
 
-	i = 1;
-	dist = 0;
-	if (st1[0] < st2[0] && st1[0] > st2[len2 - 1])
-		return (0);
-	while (i < len2)
-	{
-		printf("%d", i);
-		if (st1[0] < st2[i] && st1[0] > st2[i - 1])
-		{
-			dist = i;
-			break;
-		}
-		i++;
-	}
-	printf("\n");
-	i = 1;
-	while (i < len2)
-	{
-		printf("%d", i);
-		if (st1[0] < st2[len2 - i] && st1[0] > st2[len2 - i - 1])
-			if (i < ft_abs(dist))
-			{
-				dist = i * -1;
-				break ;
-			}
-		i++;
-	}
-	printf("\t%d\n", dist);
-	return (dist);
-}
+// 	if (index == ORD_LEN)
+// 	{
+// 		int		i = 0;
+// 		int		num = 0;
+// 		int		numlen = 0;
+// 		// float		score = 0;
 
-static int		ft_check_spot_order(unsigned *stack, unsigned len)
-{
-	int		biggest_num;
-	int		i;
+// 		if (!(best_arr))
+// 		{
+// 			if (!(best_arr = (int *)malloc(sizeof(int) * ORD_LEN)))
+// 				exit(1);
+// 			ft_bzero(best_arr, ORD_LEN);
+// 		}
+// 		while (i < ORD_LEN && i < len)
+// 		{
+// 			if (bools[i])
+// 			{
+// 				if (stack[i] >= num)
+// 				{
+// 					num = stack[i];
+// 					numlen++;
+// 				}
+// 				else
+// 				{
+// 					numlen = 0;
+// 					break;
+// 				}
+// 			}
+// 			i++;
+// 		}
 
-	biggest_num = ft_find_biggest(stack, len);
-	i = ft_find_smallest(stack, len);
-	// if (!(i == 0 && biggest_num == len - 1) || !(biggest_num == i + 1))
-	// {
-	// 	printf("\n~~~~~~~~~~~\n");
-	// 	return (0);
-	// }
-	// ft_putstack(stack, len, 0, 1);
-	printf("\n\nlen %d checking: \n", len);
-	int err = 0;
-	while (stack[i] == stack[i + 1] - 1)
-	{
-		err++;
-		if (err > len * 2)
-			exit (1);
-		printf("%d ", i);
+// 		if (numlen > best)
+// 		{
+// 			best = numlen;
+// 			if (best_arr)
+// 				free(best_arr);
+// 			best_arr = ft_arrdup((int*)bools, ORD_LEN);
+// 		}
+// 		return (best_arr);
+// 	}
+// 	bools[index] = 0;
+// 	ft_orders(index + 1, bools, stack, len);
+// 	bools[index] = 1;
+// 	ft_orders(index + 1, bools, stack, len);
+// 	return (best_arr);
+// }
 
-		i++;
-		if (i == len - 1)
-		{
-			if (stack[i] != stack[0] - 1)
-			{
-				printf("not ordered\n");
-				return (0);
-			}
-			i = 0;
-		}
-		if (i == biggest_num)
-		{
-			printf("ordered\n");
-			return (1);
-		}
-	}
-	printf("not ordered\n");
-	return (0);
-}
+// int				ft_optimize_middle(unsigned *stack, unsigned len)
+// {
+// 	static unsigned		*arr = NULL;
+// 	int					*res;
+// 	int					starter;
+// 	int					i;
+
+// 	i = 0;
+// 	if (!(arr))
+// 		if (!(arr = (unsigned *)malloc(sizeof(unsigned) * ORD_LEN)))
+// 			return (-1);
+// 	ft_bzero(arr, ORD_LEN);
+// 	res = ft_orders(0, arr, stack, len);
+// 	printf("%p\n", res);
+// 	for (int i = 0; i < ORD_LEN && i < len; i++)
+// 	{
+// 		// printf("%d ", res[i]);
+// 		if (res[i])
+// 			printf("%d ", stack[i]);
+// 	}
+// 	printf("\n");
+// 	return (1);
+// }
 
 static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 {
@@ -164,100 +189,88 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 	len1 = len;
 	len2 = 0;
 	i = 0;
-
-	/*
-
-left to right if number is too big put it in stack2 if its too small ignore it at the same time put numbers from stack2 to stack1 and swap if its close
-right to left if number is too small put it in stack2 if its too big ignore it at the same time put numbers from stack2 to stack1 and swap if its close
-
-left to right if number is not in order take it out
-put everything back
-
-	*/
-	i = 0;
-	ft_optimize_start(st1, len1);
 	int first = st1[0];
 
-	while (!ft_check_order(st1, len1))
-	{
-		if (i > len * 2)
-			exit(1);
-		printf("\033[0;34m%d: ", i);
-		ft_putstack(st1, len1, i, 1);
-		if (st1[0] > st1[1] && st1[1] != first)
-			ft_swap_ps(st1, len1);
-		else if (st1[1] == first)
-		{
-			ft_rotate(st1, len1);
-			break;
-		}
-
-		if (len2 && st2[0] > st1[len - 1])
-		{
-			// printf("push back: %d index: %d\n", st2[0], i);
-			ft_push(st2, st1, len2, len1);
-			moves++;
-			push_moves++;
-			len2--;
-			len1++;
-			ft_rotate(st1, len1);
-			moves++;
-		}
-		else if (st1[0] != first && (st1[0] < st1[len1 - 1]))	// || st1[0] > (st1[len - 1] + 1) * 2))
-		{
-			// printf("push away: %d index: %d\n", st1[0], i);
-			// ft_push_order_rev(st1, st2, len1, len2);
-			// ft_push_order(st1, st2, len1, len2);
-			ft_push(st1, st2, len1, len2);
-			moves++;
-			push_moves++;
-			len1--;
-			len2++;
-			i++;
-		}
-		else
-		{
-			ft_rotate(st1, len1);
-			moves++;
-			i++;
-		}
-	}
-
-	printf("\n");
-	ft_putstack(st1, len1, 0, 1);
-	ft_putstack(st2, len2, 0, 1);
-	printf("\n");
-	printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);
-	// ft_putstr("!!!!!!!!!!!!!!!!!!!!!SWITCH!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
-	// exit(1);
-
-	i = len - 1;
+	ft_optimize_start(st1, len1);
 
 	int err = 0;
-	while (!(ft_check_order(st1, len1) && !len2))
+	while (!ft_check_order(st1, len1))
 	{
 		err++;
-		printf("\033[0;34m%d: ", i);
-		ft_putstack(st1, len1, 0, 1);
 		if (err == len * 2)
 			return (0);
 
-		if (len2 && st2[0] < st1[0])	//push back
+		if (len2 && st2[0] > st1[len - 1])
 		{
-			ft_push(st2, st1, len2, len1);
+			ft_push(st2, st1, len2, len1);	//push back to st1
 			push_moves++;
 			moves++;
 			len2--;
 			len1++;
-			// ft_rrotate(st1, len1);
-			// moves++;
 		}
-		printf("\033[0;34m%d: ", i);
-		ft_putstack(st1, len1, i, 0);
-		ft_rrotate(st1, len1);
-		moves++;
+		else if (st1[0] != first && st1[0] < st1[len1 - 1])// && ft_optimize_middle(st1, len1))
+		{
+			ft_push(st1, st2, len1, len2);	//push to st2
+			push_moves++;
+			moves++;
+			len1--;
+			len2++;
+		}
+		else
+		{
+			if (len2 > 1)
+				ft_rr(st1, st2, len1, len2);
+			else
+				ft_rotate(st1, len1);
+			moves++;
+		}
 	}
+
 	ft_putstack(st1, len1, 0, 1);
+	// ft_putstack(st2, len2, 0, 1);
+	printf("\n");
+	printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);
+
+	int dist = 0;
+
+	err = 0;
+	while (len2)
+	{
+		err++;
+		if (err == len * 2)
+			return (0);
+
+		dist = ft_find_move(st1, st2, len1, len2);
+		i = 0;
+		while (i < ft_abs(dist))
+		{
+			if (dist > 0)
+				ft_rotate(st2, len2);
+			else if (dist < 0)
+				ft_rrotate(st2, len2);
+			moves++;
+			st2_ordering_moves++;
+			i++;
+		}
+		dist = ft_push_dist(st1, len1, st2[0]);
+		i = 0;
+		while (i < ft_abs(dist))
+		{
+			if (dist > 0)
+				ft_rotate(st1, len1);
+			else if (dist < 0)
+				ft_rrotate(st1, len1);
+			moves++;
+			st1_ordering_moves++;
+			i++;
+		}
+		ft_push(st2, st1, len2, len1);
+		push_moves++;
+		moves++;
+		len2--;
+		len1++;
+	}
+	ft_rot_start(st1, len1);
 	printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);
 	return(0);
 }
@@ -273,7 +286,6 @@ int		main(int argc, char **argv)
 	push_moves = 0;
 	st1_ordering_moves = 0;
 	st2_ordering_moves = 0;
-
 	if (argc < 2)
 	{
 		ft_putstr("more arguments needed\n");

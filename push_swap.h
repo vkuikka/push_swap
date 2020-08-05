@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:56:38 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/01/27 17:57:41 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/05 14:40:42 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 # include "libft.h"
+
+#define START_FIND_DIST 3
 
 void		ft_swap_ps(unsigned *stack, unsigned len);
 void		ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);

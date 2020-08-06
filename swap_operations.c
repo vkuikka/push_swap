@@ -3,38 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   swap_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:54:25 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/01/27 17:54:45 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/06 14:38:08 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"	//remove
 
-void	ft_swap_ps(unsigned *stack, unsigned len)
+int		ft_swap_ps(unsigned *stack, unsigned len)
 {
 	unsigned	tmp;
 
 	if (len < 2)
 	{
-		ft_putstr("\n\tERROR swap stack length inclomplete: ");
-		ft_putnbr(len);
-		write(1, "\n", 1);
-		exit(1);
+		ft_putstr("\n\tERROR swapping stack len < 2!\n");
+		return (0);
 	}
 	tmp = stack[0];
 	stack[0] = stack[1];
 	stack[1] = tmp;
+	return (1);
 }
 
-void	ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
+int		ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	ft_swap_ps(stack1, len1);
-	ft_swap_ps(stack2, len2);
+	if (!ft_swap_ps(stack1, len1))
+		return (0);
+	if (!ft_swap_ps(stack2, len2))
+		return (0);
+	return (1);
 }
 
-void	ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2)
+int		ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2)
 {
 	unsigned		i;
 	unsigned		tmp;
@@ -45,7 +47,7 @@ void	ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2)
 	else
 	{
 		ft_putstr("\n\tERROR pushing from epmty stack!\n");
-		exit(1);
+		return (0);
 	}
 	while(i + 1 < len1)
 	{
@@ -59,6 +61,6 @@ void	ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2)
 		dest[i] = dest[i - 1];
 		i--;
 	}
-	//if (len1)
 	dest[0] = tmp;
+	return (1);
 }

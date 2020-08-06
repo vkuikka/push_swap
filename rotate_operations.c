@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rotate_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:57:47 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/01/27 17:58:09 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/06 14:37:31 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_rotate(unsigned *stack, unsigned len)
+int		ft_rotate(unsigned *stack, unsigned len)
 {
 	unsigned		first;
 	unsigned		i;
@@ -20,7 +20,7 @@ void	ft_rotate(unsigned *stack, unsigned len)
 	if (len < 2)
 	{
 		ft_putstr("\n\tERROR stack empty in rotate\n");
-		exit(1);
+		return (0);
 	}
 	i = 0;
 	first = stack[0];
@@ -31,15 +31,19 @@ void	ft_rotate(unsigned *stack, unsigned len)
 		i++;
 	}
 	stack[i] = first;
+	return (1);
 }
 
-void	ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
+int		ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	ft_rotate(stack1, len1);
-	ft_rotate(stack2, len2);
+	if (!ft_rotate(stack1, len1))
+		return (0);
+	if (!ft_rotate(stack2, len2))
+		return (0);
+	return (1);
 }
 
-void	ft_rrotate(unsigned *stack, unsigned len)
+int		ft_rrotate(unsigned *stack, unsigned len)
 {
 	unsigned		last;
 	unsigned		i;
@@ -47,7 +51,7 @@ void	ft_rrotate(unsigned *stack, unsigned len)
 	if (len < 2)
 	{
 		ft_putstr("\n\tERROR stack empty in reverse rotate\n");
-		exit(1);
+		return (0);
 	}
 	i = len - 1;
 	last = stack[i];
@@ -57,10 +61,14 @@ void	ft_rrotate(unsigned *stack, unsigned len)
 		i--;
 	}
 	stack[0] = last;
+	return (1);
 }
 
-void	ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
+int		ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	ft_rrotate(stack1, len1);
-	ft_rrotate(stack2, len2);
+	if (!ft_rrotate(stack1, len1))
+		return (0);
+	if (!ft_rrotate(stack2, len2))
+		return (0);
+	return (1);
 }

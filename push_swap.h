@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:56:38 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/05 20:16:03 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/06 14:37:50 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 
 # include "libft.h"
 
-void		ft_swap_ps(unsigned *stack, unsigned len);
-void		ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
-void		ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2);
-void		ft_rotate(unsigned *stack, unsigned len);
-void		ft_rrotate(unsigned *stack, unsigned len);
-void		ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
-void		ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+int			ft_swap_ps(unsigned *stack, unsigned len);
+int			ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+int			ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2);
+int			ft_rotate(unsigned *stack, unsigned len);
+int			ft_rrotate(unsigned *stack, unsigned len);
+int			ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
+int			ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 
 unsigned	*ft_simplify(int *stack, unsigned len);
 int			ft_find_smallest(unsigned *stack, unsigned len);

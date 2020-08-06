@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:25:09 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/05 15:56:45 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/06 16:18:22 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			ft_find_move(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2)
 
 	i = 0;
 	best_rot = 0;
-	best_dist = INT32_MAX;
+	best_dist = 2147483647;
 	while (i < len2)
 	{
 		dist = ft_abs(ft_push_dist(st1, len1, st2[i]));

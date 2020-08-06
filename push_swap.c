@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:08:48 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/05 20:24:03 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/06 16:44:29 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,26 +190,51 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 	len2 = 0;
 	i = 0;
 	int first = st1[0];
+	ft_putstack(st1, len1, 0, 1);
 
-	ft_optimize_start(st1, len1);
+	// ft_optimize_start(st1, len1);
 
 	int err = 0;
 	while (!ft_check_order(st1, len1))
 	{
 		err++;
-		if (err == len * 2)
-			return (0);
-
-		if (len2 && st2[0] > st1[len - 1])
+		if (err == len * len)
 		{
+			printf("too many loops\n");
+			return (0);
+		}
+
+		printf("\n");
+		ft_putstack(st1, len1, 0, 1);
+		ft_putstack(st2, len2, 0, 1);
+
+		if (len1 < 5 && st1[0] > st1[1] && ft_find_biggest(st1, len1))
+		{
+			if (len2 > 1 && st2[0] > st1[1])
+			{
+				printf("%d swapping both\n", moves);
+				ft_ss(st1, st2, len1, len2);
+			}
+			else
+			{
+				printf("%d swapping stack 1\n", moves);
+				ft_swap_ps(st1, len1);
+			}
+			moves++;
+		}
+		else if (len2 && st2[0] > st1[len - 1])
+		{
+			printf("%d push to stack 1\n", moves);
 			ft_push(st2, st1, len2, len1);	//push back to st1
 			push_moves++;
 			moves++;
 			len2--;
 			len1++;
 		}
-		else if (st1[0] != first && st1[0] < st1[len1 - 1])// && ft_optimize_middle(st1, len1))
-		{
+		else if ((st1[0] != first && st1[0] < st1[len1 - 1] &&
+			!(!ft_find_smallest(st1, len1) && ft_find_biggest(st1, len1) == len - 1)) ||
+			(st1[len1 - 1] == ft_find_smallest(st1, len1) && st1[len1 - 2] == ft_find_biggest(st1, len1) && st1[0] > st1[1]))
+		{	// && ft_optimize_middle(st1, len1))
 			ft_push(st1, st2, len1, len2);	//push to st2
 			push_moves++;
 			moves++;
@@ -219,16 +244,22 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 		else
 		{
 			if (len2 > 1)
+			{
+				printf("%d rotate both\n", moves);
 				ft_rr(st1, st2, len1, len2);
+			}
 			else
+			{
+				printf("%d rotate stack 1\n", moves);
 				ft_rotate(st1, len1);
+			}
 			moves++;
 		}
 	}
 
-	ft_putstack(st1, len1, 0, 1);
+	// ft_putstack(st1, len1, 0, 1);
 	// ft_putstack(st2, len2, 0, 1);
-	printf("\n");
+	// printf("\n");
 	printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);
 
 	int dist = 0;
@@ -239,6 +270,10 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 		err++;
 		if (err == len * 2)
 			return (0);
+
+		ft_putstack(st1, len1, 0, 1);
+		ft_putstack(st2, len2, 0, 1);
+		printf("\n");
 
 		dist = ft_find_move(st1, st2, len1, len2);
 		i = 0;
@@ -277,10 +312,9 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 
 int		main(int argc, char **argv)
 {
-	int			*buffer;
 	unsigned	*stack1;
 	unsigned	*stack2;
-	unsigned	i;
+	int			*buffer;
 
 	moves = 0;
 	push_moves = 0;
@@ -296,9 +330,8 @@ int		main(int argc, char **argv)
 		!(stack2 = (unsigned *)malloc(sizeof(unsigned) * argc)))
 		return (0);
 	ft_bzero(stack2, argc);
-	i = -1;
-	while (++i < argc)
-		buffer[i] = ft_atoi(argv[i + 1]);
+	if (!ft_check_input(argv + 1, buffer, argc) || argc == 1)
+		return (1);
 	stack1 = ft_simplify(buffer, argc);
 	ft_push_swap(stack1, stack2, argc);
 	return (0);

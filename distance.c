@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   distance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:25:09 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/06 16:18:22 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/14 22:11:09 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,26 @@ int			ft_push_dist(unsigned *st1, unsigned len1, unsigned number_to_push)
 	int	dist;
 	int i;
 
-	i = 1;
+	i = 0;
 	dist = 0;
 	if (number_to_push < st1[0] && number_to_push > st1[len1 - 1])
 		return (0);
 	if (number_to_push < st1[ft_find_smallest(st1, len1)])
 	{
 		dist = ft_find_smallest(st1, len1);
-		if (dist > len1 / 2)
-			return (dist - len1);
-		return (dist);
+		return (dist > len1 / 2 ? dist - len1 : dist);
 	}
-	while (i < len1)
-	{
-		// printf("%d ", i);
+	while (++i < len1)
 		if (number_to_push < st1[i] && number_to_push > st1[i - 1])
 		{
 			dist = i;
 			break;
 		}
-		i++;
-	}
-	// printf("\n");
-	i = 1;
-	while (i < len1)
-	{
-		// printf("%d ", i);
-		if (number_to_push < st1[len1 - i] && number_to_push > st1[len1 - i - 1])
-			if (i < ft_abs(dist))
-			{
-				dist = i * -1;
-				break ;
-			}
-		i++;
-	}
-	// printf("\t%d\n", dist);
+	i = 0;
+	while (++i < len1)
+		if (number_to_push < st1[len1 - i] &&
+			number_to_push > st1[len1 - i - 1] && i < ft_abs(dist))
+			return (i * -1);
 	return (dist);
 }
 
@@ -67,8 +52,6 @@ int			ft_find_move(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2)
 	int		dist;
 	int		best_dist;
 	int		best_rot;
-	
-	int		first = st2[0];
 
 	i = 0;
 	best_rot = 0;

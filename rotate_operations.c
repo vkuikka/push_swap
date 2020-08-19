@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:57:47 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 14:13:22 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/19 14:38:09 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int		ft_rrotate(unsigned *stack, unsigned len)
 
 int		ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	ft_putstr("rrr\n");
 	if (!ft_rrotate(stack1, len1))
 		return (0);
 	if (!ft_rrotate(stack2, len2))

@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:54:25 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/06 14:38:08 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/17 17:18:32 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		ft_swap_ps(unsigned *stack, unsigned len)
 
 int		ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
+	ft_putstr("ss\n");
 	if (!ft_swap_ps(stack1, len1))
 		return (0);
 	if (!ft_swap_ps(stack2, len2))

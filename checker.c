@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:20 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/06 15:54:45 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/19 13:57:53 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			main(int argc, char **argv)
 		(!(stacks[0] = (int *)malloc(sizeof(int) * argc - 1))) ||
 		(!(stacks[1] = (int *)malloc(sizeof(int) * argc - 1))))
 		return (1);
-	if (!ft_check_input(argv + 1, stacks[0], argc - 1))
+	if (!(argc = ft_check_input(argv + 1, &stacks[0], argc - 1)))
 	{
 		ft_putstr("Error\n");
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:20 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 13:57:53 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/19 15:27:51 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,9 @@ static int	ft_evaluate(int **stacks, int *lengths)
 	ft_putnbr_arr(&stacks[0], 1, lengths[0]);
 	ft_putnbr_arr(&stacks[1], 1, lengths[1]);
 	while (0 < (tmp = get_next_line(0, &instruction)))
-	{
 		if (0 >= (tmp = ft_rotate_operations(stacks, lengths, instruction)) &&
 			0 >= (tmp2 = ft_swap_operations(stacks, lengths, instruction)))
 			return (tmp > tmp2 ? tmp : tmp2);
-		ft_putnbr_arr(&stacks[0], 1, lengths[0]);
-		ft_putnbr_arr(&stacks[1], 1, lengths[1]);
-	}
 	if (tmp < 0)
 		return (-1);
 	if (lengths[1])
@@ -104,12 +100,11 @@ int			main(int argc, char **argv)
 		(!(stacks[0] = (int *)malloc(sizeof(int) * argc - 1))) ||
 		(!(stacks[1] = (int *)malloc(sizeof(int) * argc - 1))))
 		return (1);
-	if (!(argc = ft_check_input(argv + 1, &stacks[0], argc - 1)))
+	if (!(lengths[0] = ft_check_input(argv + 1, &stacks[0], argc - 1)))
 	{
 		ft_putstr("Error\n");
 		return (1);
 	}
-	lengths[0] = argc - 1;
 	lengths[1] = 0;
 	if (0 < (tmp = ft_evaluate(stacks, lengths)))
 		ft_putstr("OK\n");

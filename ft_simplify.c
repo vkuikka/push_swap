@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simplify.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:54 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/14 22:17:31 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/19 12:56:47 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,23 +114,23 @@ unsigned int	*ft_simplify(int *stack, unsigned len)
 	int				found_index;
 	int				i;
 
-	i = 0;
+	i = -1;
 	current_num = 1;
 	found_index = ft_find_smallest_signed(stack, len);
 	if (!(simplified = (unsigned *)malloc(sizeof(unsigned) * len)))
 		return (NULL);
-	ft_bzero(simplified, len);
+	while (++i < len)
+		simplified[i] = 0;
+	i = 0;
 	while (!ft_greatest_found(stack, simplified, len))
 	{
-		if (i == len)
-			i = 0;
 		if (i == ft_smallest_greater_than(stack, len, stack[found_index]))
 		{
 			found_index = i;
 			simplified[i] = current_num++;
 			ft_match_equals(simplified, stack, len, found_index);
 		}
-		i++;
+		i = i == len - 1 ? i = 0 : i + 1;
 	}
 	free(stack);
 	return (simplified);

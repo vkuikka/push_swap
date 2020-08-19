@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:57:47 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 14:38:09 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/19 14:42:41 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_rotate(unsigned *stack, unsigned len)
 
 	if (len < 2)
 	{
-		ft_putstr("\n\tERROR stack empty in rotate\n");
+		ft_putstr("\tERROR stack empty in rotate\n");
 		return (0);
 	}
 	i = 0;
@@ -50,7 +50,7 @@ int		ft_rrotate(unsigned *stack, unsigned len)
 
 	if (len < 2)
 	{
-		ft_putstr("\n\tERROR stack empty in reverse rotate\n");
+		ft_putstr("\tERROR stack empty in reverse rotate\n");
 		return (0);
 	}
 	i = len - 1;

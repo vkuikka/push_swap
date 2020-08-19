@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:08:48 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 13:39:31 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/19 16:37:45 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_optimize_start(unsigned *stack, int len)
 
 	tmp = 0;
 	i = 0;
-	while (i < START_FIND_DIST)
+	while (i < (len > 30 ? START_FIND_DIST : len / 4))
 	{
 		if (stack[i + 1] < stack[tmp])
 			tmp = i + 1;
@@ -119,8 +119,9 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 	len1 = len;
 	len2 = 0;
 	i = 0;
-	if (len > 40)
-		ft_optimize_start(st1, len1);
+	// if (len > 40)
+	// ft_putstack(st1, len1, 0, 1);
+	ft_optimize_start(st1, len1);
 
 	int err = 0;
 	while (!ft_check_order(st1, len1))
@@ -136,14 +137,27 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 		// ft_putstack(st1, len1, 0, 1);
 		// ft_putstack(st2, len2, 0, 1);
 
-		if (len1 < 5 && st1[0] > st1[1] && ft_find_biggest(st1, len1))
+		if (len1 <= 3 && !ft_check_order(st1, len1))
 		{
-			if (len2 > 1 && st2[0] > st1[1])
-				ft_ss(st1, st2, len1, len2);
-			else
+			if (st1[0] < st1[1])
+			{
+				ft_putstr("rra\n");
+				ft_rrotate(st1, len1);
+			}
+			else if (st1[0] > st1[1] && st1[0] < st1[2])
 			{
 				ft_putstr("sa\n");
 				ft_swap_ps(st1, len1);
+			}
+			else if (st1[0] > st1[1] && st1[0] > st1[2])
+			{
+				ft_putstr("ra\n");
+				ft_rotate(st1, len1);
+			}
+			else if (st1[0] < st1[1] && st1[0] > st1[2])
+			{
+				ft_putstr("rra\n");
+				ft_rrotate(st1, len1);
 			}
 			moves++;
 		}
@@ -156,9 +170,9 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 			len2--;
 			len1++;
 		}
-		else if ((st1[0] != first && st1[0] < st1[len1 - 1] &&
-			!(!ft_find_smallest(st1, len1) && ft_find_biggest(st1, len1) == len - 1)) ||
-			(st1[len1 - 1] == ft_find_smallest(st1, len1) && st1[len1 - 2] == ft_find_biggest(st1, len1) && st1[0] > st1[1]))
+		else if ((st1[0] != first && st1[0] < st1[len1 - 1]))// &&
+			// !(!ft_find_smallest(st1, len1) && ft_find_biggest(st1, len1) == len - 1)) ||
+			// (st1[len1 - 1] == ft_find_smallest(st1, len1) && st1[len1 - 2] == ft_find_biggest(st1, len1) && st1[0] > st1[1]))
 		{
 			ft_putstr("pb\n");
 			ft_push(st1, st2, len1, len2);
@@ -172,6 +186,7 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 			if (len2 > 1)
 			{
 				// printf("%d rotate both\n", moves);
+				ft_putstr("rr\n");
 				ft_rr(st1, st2, len1, len2);
 			}
 			else
@@ -182,6 +197,7 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 			}
 			moves++;
 		}
+		// ft_putstack(st1, len1, 0, 1);
 	}
 
 	// ft_putstack(st1, len1, 0, 1);
@@ -270,7 +286,6 @@ int		main(int argc, char **argv)
 		!(stack2 = (unsigned *)malloc(sizeof(unsigned) * argc)))
 		return (1);
 	stack1 = ft_simplify(buffer, argc);
-	ft_putstack(stack1, argc, 0, 1);
 	ft_push_swap(stack1, stack2, argc);
 	return (0);
 }

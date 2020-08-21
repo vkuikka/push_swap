@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:20 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 15:27:51 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/21 13:53:39 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ static int	ft_evaluate(int **stacks, int *lengths)
 	int		tmp;
 	int		tmp2;
 
-	ft_putnbr_arr(&stacks[0], 1, lengths[0]);
-	ft_putnbr_arr(&stacks[1], 1, lengths[1]);
 	while (0 < (tmp = get_next_line(0, &instruction)))
 		if (0 >= (tmp = ft_rotate_operations(stacks, lengths, instruction)) &&
 			0 >= (tmp2 = ft_swap_operations(stacks, lengths, instruction)))

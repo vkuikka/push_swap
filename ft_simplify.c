@@ -130,7 +130,7 @@ unsigned int	*ft_simplify(int *stack, unsigned len)
 			simplified[i] = current_num++;
 			ft_match_equals(simplified, stack, len, found_index);
 		}
-		i = i == len - 1 ? i = 0 : i + 1;
+		i = i == len - 1 ? 0 : i + 1;
 	}
 	free(stack);
 	return (simplified);

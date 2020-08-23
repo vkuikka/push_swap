@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simplify.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:54 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 12:56:47 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:26:14 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,22 +109,22 @@ static int		ft_greatest_found(int *stack, unsigned *simplified, unsigned len)
 
 unsigned int	*ft_simplify(int *stack, unsigned len)
 {
-	unsigned int	*simplified;
-	int				current_num;
-	int				found_index;
-	int				i;
+	unsigned	*simplified;
+	unsigned	i;
+	int			current_num;
+	int			found_index;
 
 	i = -1;
 	current_num = 1;
-	found_index = ft_find_smallest_signed(stack, len);
 	if (!(simplified = (unsigned *)malloc(sizeof(unsigned) * len)))
 		return (NULL);
 	while (++i < len)
 		simplified[i] = 0;
 	i = 0;
+	found_index = ft_find_smallest_signed(stack, len);
 	while (!ft_greatest_found(stack, simplified, len))
 	{
-		if (i == ft_smallest_greater_than(stack, len, stack[found_index]))
+		if (i == (unsigned)ft_smallest_greater_than(stack, len, stack[found_index]))
 		{
 			found_index = i;
 			simplified[i] = current_num++;

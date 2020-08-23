@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:57:47 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/23 18:11:08 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:41:29 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		ft_rotate(unsigned *stack, unsigned len, char *move)
 
 	if (len < 2)
 	{
-		ft_putstr("\tERROR stack empty in rotate\n");
-		return (0);
+		ft_putstr("KO\n");
+		exit(1);
 	}
 	if (move)
 		ft_putstr(move);
@@ -38,10 +38,8 @@ int		ft_rotate(unsigned *stack, unsigned len, char *move)
 
 int		ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	if (!ft_rotate(stack1, len1, NULL))
-		return (0);
-	if (!ft_rotate(stack2, len2, NULL))
-		return (0);
+	ft_rotate(stack1, len1, NULL);
+	ft_rotate(stack2, len2, NULL);
 	return (1);
 }
 
@@ -52,8 +50,8 @@ int		ft_rrotate(unsigned *stack, unsigned len, char *move)
 
 	if (len < 2)
 	{
-		ft_putstr("\tERROR stack empty in reverse rotate\n");
-		return (0);
+		ft_putstr("KO\n");
+		exit(1);
 	}
 	if (move)
 		ft_putstr(move);
@@ -70,9 +68,7 @@ int		ft_rrotate(unsigned *stack, unsigned len, char *move)
 
 int		ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	if (!ft_rrotate(stack1, len1, NULL))
-		return (0);
-	if (!ft_rrotate(stack2, len2, NULL))
-		return (0);
+	ft_rrotate(stack1, len1, NULL);
+	ft_rrotate(stack2, len2, NULL);
 	return (1);
 }

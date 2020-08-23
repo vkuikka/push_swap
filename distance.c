@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:25:09 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/14 22:11:09 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:21:14 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int			ft_push_dist(unsigned *st1, unsigned len1, unsigned number_to_push)
 {
-	int	dist;
-	int i;
+	unsigned	dist;
+	unsigned	i;
 
 	i = 0;
 	dist = 0;
@@ -37,7 +37,7 @@ int			ft_push_dist(unsigned *st1, unsigned len1, unsigned number_to_push)
 	i = 0;
 	while (++i < len1)
 		if (number_to_push < st1[len1 - i] &&
-			number_to_push > st1[len1 - i - 1] && i < ft_abs(dist))
+			number_to_push > st1[len1 - i - 1] && i < (unsigned)ft_abs(dist))
 			return (i * -1);
 	return (dist);
 }
@@ -48,10 +48,10 @@ int			ft_push_dist(unsigned *st1, unsigned len1, unsigned number_to_push)
 
 int			ft_find_move(unsigned *st1, unsigned *st2, unsigned len1, unsigned len2)
 {
-	int		i;
-	int		dist;
-	int		best_dist;
-	int		best_rot;
+	unsigned	i;
+	unsigned	dist;
+	unsigned	best_dist;
+	unsigned	best_rot;
 
 	i = 0;
 	best_rot = 0;

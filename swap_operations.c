@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:54:25 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/23 18:10:52 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:41:46 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int		ft_swap_ps(unsigned *stack, unsigned len, char *move)
 
 	if (len < 2)
 	{
-		ft_putstr("\n\tERROR swapping stack len < 2!\n");
-		return (0);
+		ft_putstr("KO\n");
+		exit(1);
 	}
 	if (move)
 		ft_putstr(move);
@@ -31,10 +31,8 @@ int		ft_swap_ps(unsigned *stack, unsigned len, char *move)
 
 int		ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2)
 {
-	if (!ft_swap_ps(stack1, len1, NULL))
-		return (0);
-	if (!ft_swap_ps(stack2, len2, NULL))
-		return (0);
+	ft_swap_ps(stack1, len1, NULL);
+	ft_swap_ps(stack2, len2, NULL);
 	return (1);
 }
 
@@ -48,8 +46,8 @@ int		ft_push(unsigned *stack, unsigned *dest, unsigned *len1, unsigned *len2)
 		tmp = stack[0];
 	else
 	{
-		ft_putstr("\n\tERROR pushing from epmty stack!\n");
-		return (0);
+		ft_putstr("KO\n");
+		exit(1);
 	}
 	while(i + 1 < *len1)
 	{

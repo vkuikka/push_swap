@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 15:51:00 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 13:55:58 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:23:17 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,9 @@ static int	ft_check_dup(int *buffer, int len)
 
 int			ft_check_input(char **nums, int **buffer, int argc)
 {
-	int		*res;
-	int		numc;
 	int		buff_i;
+	int		numc;
 	int		i;
-	int		j;
 
 	if (2 > (numc = ft_check_nums(nums, argc)) ||
 			!(buffer[0] = (int *)ft_memalloc(sizeof(int) * numc)))

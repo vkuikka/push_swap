@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_iteration.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:33 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/06 14:21:39 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:22:18 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		ft_find_error(unsigned *stack, unsigned len)
 {
-	int		i;
-	int		current_number;
+	unsigned	i;
+	unsigned	current_number;
 
 	i = 1;
 	current_number = stack[0];
@@ -30,8 +30,8 @@ int		ft_find_error(unsigned *stack, unsigned len)
 
 int		ft_find_biggest(unsigned *stack, unsigned len)
 {
-	int		biggest;
-	int		i;
+	unsigned	biggest;
+	unsigned	i;
 
 	i = 1;
 	biggest = 0;
@@ -78,7 +78,7 @@ int		ft_find_smallest_signed(int *stack, unsigned len)
 
 int		ft_check_order(unsigned *stack, unsigned len)
 {
-	int		i;
+	unsigned	i;
 
 	i = 1;
 	while (i < len)

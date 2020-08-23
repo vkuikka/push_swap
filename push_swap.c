@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:08:48 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/23 18:11:53 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18: 0:27by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int		push_moves;
 
 void	ft_putstack(unsigned *stack, unsigned len, int rot_index, int direction)
 {
-	int		i;
-	int		num;
+	unsigned		i;
+	unsigned		num;
 
 	num = stack[0];
-	for (int stack_index = 0; stack_index < len; stack_index++)
+	rot_index = 3;
+	direction = 3;
+	for (unsigned stack_index = 0; stack_index < len; stack_index++)
 	{
 		i = stack_index;
 		if (stack[stack_index] < num)
@@ -117,8 +119,8 @@ static void		ft_deal_three(unsigned *st1, unsigned *len1)
 
 static int		ft_push_stack2(unsigned *st1, unsigned *st2, unsigned *len1, unsigned *len2)
 {
-	int		len;
-	int		first;
+	unsigned	first;
+	int			len;
 
 	len = *len1;
 	first = st1[0];
@@ -130,13 +132,11 @@ static int		ft_push_stack2(unsigned *st1, unsigned *st2, unsigned *len1, unsigne
 		else if (*len2 && st2[0] > st1[*len1 - 1])
 		{
 			ft_putstr("pa\n");
-			ft_push(st2, st1, len2, len1);	//push back to st1
+			ft_push(st2, st1, len2, len1);
 			push_moves++;
 			moves++;
 		}
-		else if ((st1[0] != first && st1[0] < st1[*len1 - 1]))// &&
-			// !(!ft_find_smallest(st1, len1) && ft_find_biggest(st1, len1) == len - 1)) ||
-			// (st1[len1 - 1] == ft_find_smallest(st1, len1) && st1[len1 - 2] == ft_find_biggest(st1, len1) && st1[0] > st1[1]))
+		else if (st1[0] != first && st1[0] < st1[*len1 - 1])
 		{
 			ft_putstr("pb\n");
 			ft_push(st1, st2, len1, len2);
@@ -163,43 +163,38 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 	unsigned		len1;
 	unsigned		len2;
 	unsigned		i;
-	int				tmp;
 	int				dist;
 
 	len1 = len;
 	len2 = 0;
 	dist = 0;
-	i = 0;
-
 	ft_push_stack2(st1, st2, &len1, &len2);
 	while (len2)
 	{
 		dist = ft_find_move(st1, st2, len1, len2);
-		i = 0;
-		while (i < ft_abs(dist))
+		i = -1;
+		while (++i < (unsigned)ft_abs(dist))
 		{
 			if (dist > 0)
 				ft_rotate(st2, len2, "rb\n");
 			else if (dist < 0)
 				ft_rrotate(st2, len2, "rrb\n");
-			moves++;
 			st2_ordering_moves++;
-			i++;
+			moves++;
 		}
 		dist = ft_push_dist(st1, len1, st2[0]);
-		i = 0;
-		while (i < ft_abs(dist))
+		i = -1;
+		while (++i < (unsigned)ft_abs(dist))
 		{
 			if (dist > 0)
 				ft_rotate(st1, len1, "ra\n");
 			else if (dist < 0)
 				ft_rrotate(st1, len1, "rra\n");
-			moves++;
 			st1_ordering_moves++;
-			i++;
+			moves++;
 		}
-		ft_putstr("pa\n");
 		ft_push(st2, st1, &len2, &len1);
+		ft_putstr("pa\n");
 		push_moves++;
 		moves++;
 	}

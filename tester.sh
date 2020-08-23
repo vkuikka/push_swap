@@ -29,8 +29,7 @@ do
 	for i in $(seq 1 ${AMOUNTS[j]})
 	do
 		ARG=`ruby -e "puts (1..${TESTS[j]}).to_a.shuffle.join(' ')"`
-		./push_swap $ARG | wc -l > nums_50.txt
-		MOVES=$(cat nums_50.txt | tr -d "[:space:]")
+		MOVES=$(./push_swap $ARG | wc -l | tr -d "[:space:]")
 		AVERAGE[j]=$((AVERAGE[j] + MOVES))
 		if [ "$MOVES" -gt "${RESULTS[j]}" ];
 		then
@@ -40,7 +39,7 @@ do
 		RES=$(./push_swap $ARG | ./checker $ARG)
 		if [ "$RES" != "OK" ]
 		then
-			echo FAIL
+			echo $RES
 			echo $ARG
 			exit 1
 		fi

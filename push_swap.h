@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:56:38 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/18 14:25:43 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 17:49:55 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 # define START_FIND_DIST 5
 # include "libft.h"
 
-int			ft_swap_ps(unsigned *stack, unsigned len);
+int			ft_swap_ps(unsigned *stack, unsigned len, char *move);
 int			ft_ss(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
-int			ft_push(unsigned *stack, unsigned *dest, unsigned len1, unsigned len2);
-int			ft_rotate(unsigned *stack, unsigned len);
-int			ft_rrotate(unsigned *stack, unsigned len);
+int			ft_push(unsigned *stack, unsigned *dest, unsigned *len1, unsigned *len2);
+int			ft_rotate(unsigned *stack, unsigned len, char *move);
+int			ft_rrotate(unsigned *stack, unsigned len, char *move);
 int			ft_rr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 int			ft_rrr(unsigned *stack1, unsigned *stack2, unsigned len1, unsigned len2);
 

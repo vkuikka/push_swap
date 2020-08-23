@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 17:08:48 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/19 16:37:45 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:11:53 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,12 @@ void	ft_rot_start(unsigned *stack, int len)
 	{
 		if (dist > 0)
 		{
-			ft_putstr("ra\n");
-			ft_rotate(stack, len);
+			ft_rotate(stack, len, "ra\n");
 			dist--;
 		}
 		else
 		{
-			ft_putstr("rra\n");
-			ft_rrotate(stack, len);
+			ft_rrotate(stack, len, "rra\n");
 			dist++;
 		}
 		moves++;
@@ -92,18 +90,72 @@ void	ft_optimize_start(unsigned *stack, int len)
 	{
 		if (tmp >= len / 2)
 		{
-			ft_putstr("rra\n");
-			ft_rrotate(stack, len);
+			ft_rrotate(stack, len, "rra\n");
 			tmp++;
 		}
 		else if (tmp < len / 2)
 		{
-			ft_putstr("ra\n");
-			ft_rotate(stack, len);
+			ft_rotate(stack, len, "ra\n");
 			tmp--;
 		}
 		moves++;
 	}
+}
+
+static void		ft_deal_three(unsigned *st1, unsigned *len1)
+{
+	if (st1[0] < st1[1])
+		ft_rrotate(st1, *len1, "rra\n");
+	else if (st1[0] > st1[1] && st1[0] < st1[2])
+		ft_swap_ps(st1, *len1, "sa\n");
+	else if (st1[0] > st1[1] && st1[0] > st1[2])
+		ft_rotate(st1, *len1, "ra\n");
+	else if (st1[0] < st1[1] && st1[0] > st1[2])
+		ft_rrotate(st1, *len1, "rra\n");
+	moves++;
+}
+
+static int		ft_push_stack2(unsigned *st1, unsigned *st2, unsigned *len1, unsigned *len2)
+{
+	int		len;
+	int		first;
+
+	len = *len1;
+	first = st1[0];
+	ft_optimize_start(st1, *len1);
+	while (!ft_check_order(st1, *len1))
+	{
+		if (*len1 <= 3 && !ft_check_order(st1, *len1))
+			ft_deal_three(st1, len1);
+		else if (*len2 && st2[0] > st1[*len1 - 1])
+		{
+			ft_putstr("pa\n");
+			ft_push(st2, st1, len2, len1);	//push back to st1
+			push_moves++;
+			moves++;
+		}
+		else if ((st1[0] != first && st1[0] < st1[*len1 - 1]))// &&
+			// !(!ft_find_smallest(st1, len1) && ft_find_biggest(st1, len1) == len - 1)) ||
+			// (st1[len1 - 1] == ft_find_smallest(st1, len1) && st1[len1 - 2] == ft_find_biggest(st1, len1) && st1[0] > st1[1]))
+		{
+			ft_putstr("pb\n");
+			ft_push(st1, st2, len1, len2);
+			push_moves++;
+			moves++;
+		}
+		else
+		{
+			if (*len2 > 1)
+			{
+				ft_rr(st1, st2, *len1, *len2);
+				ft_putstr("rr\n");
+			}
+			else
+				ft_rotate(st1, *len1, "ra\n");
+			moves++;
+		}
+	}
+	return (1);
 }
 
 static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
@@ -112,126 +164,24 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 	unsigned		len2;
 	unsigned		i;
 	int				tmp;
-	int				first;
-	
-	first = st1[0];
+	int				dist;
 
 	len1 = len;
 	len2 = 0;
+	dist = 0;
 	i = 0;
-	// if (len > 40)
-	// ft_putstack(st1, len1, 0, 1);
-	ft_optimize_start(st1, len1);
 
-	int err = 0;
-	while (!ft_check_order(st1, len1))
-	{
-		err++;
-		if (err == len * len)
-		{
-			printf("too many loops\n");
-			return (0);
-		}
-
-		// printf("\n");
-		// ft_putstack(st1, len1, 0, 1);
-		// ft_putstack(st2, len2, 0, 1);
-
-		if (len1 <= 3 && !ft_check_order(st1, len1))
-		{
-			if (st1[0] < st1[1])
-			{
-				ft_putstr("rra\n");
-				ft_rrotate(st1, len1);
-			}
-			else if (st1[0] > st1[1] && st1[0] < st1[2])
-			{
-				ft_putstr("sa\n");
-				ft_swap_ps(st1, len1);
-			}
-			else if (st1[0] > st1[1] && st1[0] > st1[2])
-			{
-				ft_putstr("ra\n");
-				ft_rotate(st1, len1);
-			}
-			else if (st1[0] < st1[1] && st1[0] > st1[2])
-			{
-				ft_putstr("rra\n");
-				ft_rrotate(st1, len1);
-			}
-			moves++;
-		}
-		else if (len2 && st2[0] > st1[len - 1])
-		{
-			ft_putstr("pa\n");
-			ft_push(st2, st1, len2, len1);	//push back to st1
-			push_moves++;
-			moves++;
-			len2--;
-			len1++;
-		}
-		else if ((st1[0] != first && st1[0] < st1[len1 - 1]))// &&
-			// !(!ft_find_smallest(st1, len1) && ft_find_biggest(st1, len1) == len - 1)) ||
-			// (st1[len1 - 1] == ft_find_smallest(st1, len1) && st1[len1 - 2] == ft_find_biggest(st1, len1) && st1[0] > st1[1]))
-		{
-			ft_putstr("pb\n");
-			ft_push(st1, st2, len1, len2);
-			push_moves++;
-			moves++;
-			len1--;
-			len2++;
-		}
-		else
-		{
-			if (len2 > 1)
-			{
-				// printf("%d rotate both\n", moves);
-				ft_putstr("rr\n");
-				ft_rr(st1, st2, len1, len2);
-			}
-			else
-			{
-				// printf("%d rotate stack 1\n", moves);
-				ft_putstr("ra\n");
-				ft_rotate(st1, len1);
-			}
-			moves++;
-		}
-		// ft_putstack(st1, len1, 0, 1);
-	}
-
-	// ft_putstack(st1, len1, 0, 1);
-	// ft_putstack(st2, len2, 0, 1);
-	// printf("\n");
-	// printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);
-
-	int dist = 0;
-
-	err = 0;
+	ft_push_stack2(st1, st2, &len1, &len2);
 	while (len2)
 	{
-		err++;
-		if (err == len * 2)
-			return (0);
-
-		// ft_putstack(st1, len1, 0, 1);
-		// ft_putstack(st2, len2, 0, 1);
-		// printf("\n");
-
 		dist = ft_find_move(st1, st2, len1, len2);
 		i = 0;
 		while (i < ft_abs(dist))
 		{
 			if (dist > 0)
-			{
-				ft_putstr("rb\n");
-				ft_rotate(st2, len2);
-			}
+				ft_rotate(st2, len2, "rb\n");
 			else if (dist < 0)
-			{
-				ft_putstr("rrb\n");
-				ft_rrotate(st2, len2);
-			}
+				ft_rrotate(st2, len2, "rrb\n");
 			moves++;
 			st2_ordering_moves++;
 			i++;
@@ -241,25 +191,17 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 		while (i < ft_abs(dist))
 		{
 			if (dist > 0)
-			{
-				ft_putstr("ra\n");
-				ft_rotate(st1, len1);
-			}
+				ft_rotate(st1, len1, "ra\n");
 			else if (dist < 0)
-			{
-				ft_putstr("rra\n");
-				ft_rrotate(st1, len1);
-			}
+				ft_rrotate(st1, len1, "rra\n");
 			moves++;
 			st1_ordering_moves++;
 			i++;
 		}
 		ft_putstr("pa\n");
-		ft_push(st2, st1, len2, len1);
+		ft_push(st2, st1, &len2, &len1);
 		push_moves++;
 		moves++;
-		len2--;
-		len1++;
 	}
 	ft_rot_start(st1, len1);
 	// printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);

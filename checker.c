@@ -3,68 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuikka <vkuikka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:20 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/21 13:53:39 by vkuikka          ###   ########.fr       */
+/*   Updated: 2020/08/23 18:09:50 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "get_next_line.h"
 
-static int	ft_swap_operations(int **stacks, int *lengths, char *instruction)
+static int	ft_swap_operations(int **stacks, unsigned *lengths, char *instruction)
 {
 	int		ret;
 
 	ret = -1;
 	if (!ft_strcmp(instruction, "sa"))
-		ret = ft_swap_ps((unsigned *)stacks[0], lengths[0]);
+		ret = ft_swap_ps((unsigned *)stacks[0], lengths[0], NULL);
 	else if (!ft_strcmp(instruction, "sb"))
-		ret = ft_swap_ps((unsigned *)stacks[1], lengths[1]);
+		ret = ft_swap_ps((unsigned *)stacks[1], lengths[1], NULL);
 	else if (!ft_strcmp(instruction, "ss"))
 		ret = ft_ss((unsigned *)stacks[0], (unsigned *)stacks[1],
 				lengths[0], lengths[1]);
 	else if (!ft_strcmp(instruction, "pb"))
 	{
 		ret = ft_push((unsigned *)stacks[0], (unsigned *)stacks[1],
-				lengths[0], lengths[1]);
-		lengths[0]--;
-		lengths[1]++;
+				&lengths[0], &lengths[1]);
 	}
 	else if (!ft_strcmp(instruction, "pa"))
 	{
 		ret = ft_push((unsigned *)stacks[1], (unsigned *)stacks[0],
-				lengths[1], lengths[0]);
-		lengths[1]--;
-		lengths[0]++;
+				&lengths[1], &lengths[0]);
 	}
 	return (ret);
 }
 
-static int	ft_rotate_operations(int **stacks, int *lengths, char *instruction)
+static int	ft_rotate_operations(int **stacks, unsigned *lengths, char *instruction)
 {
 	int		ret;
 
 	ret = -1;
 	if (!ft_strcmp(instruction, "ra"))
-		ret = ft_rotate((unsigned *)stacks[0], lengths[0]);
+		ret = ft_rotate((unsigned *)stacks[0], lengths[0], NULL);
 	else if (!ft_strcmp(instruction, "rb"))
-		ret = ft_rotate((unsigned *)stacks[1], lengths[1]);
+		ret = ft_rotate((unsigned *)stacks[1], lengths[1], NULL);
 	else if (!ft_strcmp(instruction, "rr"))
 		ret = ft_rr((unsigned *)stacks[0], (unsigned *)stacks[1],
 				lengths[0], lengths[1]);
 	else if (!ft_strcmp(instruction, "rra"))
-		ret = ft_rrotate((unsigned *)stacks[0], lengths[0]);
+		ret = ft_rrotate((unsigned *)stacks[0], lengths[0], NULL);
 	else if (!ft_strcmp(instruction, "rrb"))
-		ret = ft_rrotate((unsigned *)stacks[1], lengths[1]);
+		ret = ft_rrotate((unsigned *)stacks[1], lengths[1], NULL);
 	else if (!ft_strcmp(instruction, "rrr"))
 		ret = ft_rrr((unsigned *)stacks[0], (unsigned *)stacks[1],
 				lengths[0], lengths[1]);
 	return (ret);
 }
 
-static int	ft_evaluate(int **stacks, int *lengths)
+static int	ft_evaluate(int **stacks, unsigned *lengths)
 {
 	char	*instruction;
 	int		tmp;
@@ -89,9 +85,9 @@ static int	ft_evaluate(int **stacks, int *lengths)
 
 int			main(int argc, char **argv)
 {
-	int		**stacks;
-	int		lengths[2];
-	int		tmp;
+	unsigned	lengths[2];
+	int			**stacks;
+	int			tmp;
 
 	if (argc == 1 ||
 		(!(stacks = (int **)malloc(sizeof(int*) * 2))) ||

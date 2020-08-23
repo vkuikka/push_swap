@@ -20,14 +20,12 @@ int		st2_ordering_moves;
 int		st1_ordering_moves;
 int		push_moves;
 
-void	ft_putstack(unsigned *stack, unsigned len, int rot_index, int direction)
+void	ft_putstack(unsigned *stack, unsigned len)
 {
 	unsigned		i;
 	unsigned		num;
 
 	num = stack[0];
-	rot_index = 3;
-	direction = 3;
 	for (unsigned stack_index = 0; stack_index < len; stack_index++)
 	{
 		i = stack_index;
@@ -38,8 +36,6 @@ void	ft_putstack(unsigned *stack, unsigned len, int rot_index, int direction)
 			num = stack[stack_index];
 			printf("\033[0;32m%d ", stack[stack_index]);	//green
 		}
-		// else if (stack[stack_index] > i)
-			// printf("\033[0;33m%d ", stack[stack_index]);
 	}
 	printf("\n");
 }
@@ -199,7 +195,6 @@ static int		ft_push_swap(unsigned *st1, unsigned *st2, unsigned len)
 		moves++;
 	}
 	ft_rot_start(st1, len1);
-	// printf("\033[0;0mtotal:\t\t%d\npush:\t\t%d\nst1 ord:\t%d\nst2 ord:\t%d\n\n", moves, push_moves, st1_ordering_moves, st2_ordering_moves);
 	return(0);
 }
 

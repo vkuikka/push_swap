@@ -20,16 +20,16 @@ INCLUDE = libft/includes
 all: $(NAME)
 
 $(NAME):
-	#make -C libft
-	#gcc -o $(NAME) $(OPERATIONS) $(LIB) $(FILES) -I $(INCLUDE)
+	make -C libft
 	gcc -o $(NAME) -Wall -Wextra -Werror $(OPERATIONS) $(LIB) $(FILES) -I $(INCLUDE)
+	#gcc -o $(NAME) $(OPERATIONS) $(LIB) $(FILES) -I $(INCLUDE)
 	gcc -o checker checker.c $(OPERATIONS) $(LIB) -I $(INCLUDE)
 
 clean:
-	#make clean -C libft
+	make clean -C libft
 
 fclean: clean
-	#make fclean -C libft
+	make fclean -C libft
 	rm -f $(NAME)
 	rm -f checker
 

@@ -6,7 +6,7 @@
 /*   By: vkuikka <vkuikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:28:20 by vkuikka           #+#    #+#             */
-/*   Updated: 2020/08/23 18:09:50 by vkuikka          ###   ########.fr       */
+/*   Updated: 2021/03/22 19:34:47 by vkuikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,14 @@ static int	ft_evaluate(int **stacks, unsigned *lengths)
 int			main(int argc, char **argv)
 {
 	unsigned	lengths[2];
-	int			**stacks;
+	int			*stacks[2];
+	int			alloc;
 	int			tmp;
 
+	alloc = argc != 2 ? argc - 1 : ft_word_count(argv[1], ' ');
 	if (argc == 1 ||
-		(!(stacks = (int **)malloc(sizeof(int*) * 2))) ||
-		(!(stacks[0] = (int *)malloc(sizeof(int) * argc - 1))) ||
-		(!(stacks[1] = (int *)malloc(sizeof(int) * argc - 1))))
+		(!(stacks[0] = (int *)malloc(sizeof(int) * alloc))) ||
+		(!(stacks[1] = (int *)malloc(sizeof(int) * alloc))))
 		return (1);
 	if (!(lengths[0] = ft_check_input(argv + 1, &stacks[0], argc - 1)))
 	{

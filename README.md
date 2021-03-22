@@ -1,6 +1,8 @@
 # push_swap
 Sorting algorithm that finds the most optimal (or optimal enough) way to sort an array.
 
+This project has been tested to work on macOS and should work on linux aswell. The tester script probably will not work on other operating systems than macOS.
+
 ## Rules
  - The game is composed of two stacks.
  - Numbers can be moved between and inside the stacks with the following moves:
@@ -29,3 +31,12 @@ Sorting algorithm that finds the most optimal (or optimal enough) way to sort an
 - Give numbers that will be sorted as argument when running the program.
 	- For example run `./push_swap 1 3 2`
 - The program will give you the moves that will result in sorting the numbers.
+
+## Checker
+- A checker file will be compiled when the main program is compiled.
+- Checker is run the same way as push_swap but then waits for the user to give moves that are supposed to result in a sorted array. Press enter after every move.
+- After giving all the moves press CTRL + D. After this the checker program will tell you if the numbers were sorted or not.
+- A tester script is also included. Run this by typing `sh tester.sh`. The tester script will take a little longer to print out the results because it tests with multiple different combinations. The amount of tests can ofcourse be changed from the script itself.
+	- To change the amount of numbers in one of the tests, change the values in TESTS array.
+	- To change the amount of tests done on a number, change the values in AMOUNTS array.
+	- The result will give the largest amount of moves and the average.

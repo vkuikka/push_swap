@@ -4,6 +4,9 @@ Sorting algorithm that finds the most optimal (or optimal enough) way to sort an
 This project has been tested to work on macOS and should work on linux aswell. The tester script probably will not work on other operating systems than macOS.
 
 ## Rules
+
+related: https://en.wikipedia.org/wiki/Pushdown_automaton
+
  - The game is composed of two stacks.
  - Numbers can be moved between and inside the stacks with the following moves:
  	- Swap to numbers on top of either stack.
